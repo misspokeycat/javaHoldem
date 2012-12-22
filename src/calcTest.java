@@ -1,3 +1,4 @@
+//Sample class used for testing CalculateValue
 import java.util.Arrays;
 
 public class calcTest {

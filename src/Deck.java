@@ -27,16 +27,6 @@ public class Deck {
 	
 	public void shuffle() {
 		Card[] shuffled = new Card[52];
-//		for (int i = 52, j = 0; i > 0; i--, j++) {
-//			boolean a = false;
-//			while (a == false) {
-//				int randomPos = (int) Math.random() * i;
-//				if (cardsAvail[randomPos] != null) {
-//					shuffled[j] = cardsAvail[randomPos];
-//					cardsAvail[randomPos] = null;
-//					a = true;
-//				}
-//			}
 			shuffled[0] = cardsAvail[0];
 			for (int i = 1; i<52; i++){
 				int z = (int)(Math.random()*i);
