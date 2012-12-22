@@ -3,6 +3,7 @@ import java.util.Arrays;
 public class CalculateValue {
 	public static int Calculate(Card[] sortedTable) {
 		int highestCardInHand;
+		int handval = 0;
 		Boolean pair = false, twoPair = false, threeOfAKind = false, straight = false, flush = false, fullHouse = false, straightFlush = false, fourOfAKind = false, royal = false;
 
 		// Checks for pairs
@@ -74,8 +75,25 @@ public class CalculateValue {
 			}
 			if (straightCounter == 5) {
 				straight = true;
-				highestCardInHand = sortedTable[x + 4].getValueInt();
+				highestCardInHand = sortedTable[x + y - 1].getValueInt();
 				//TODO: Straight Flushes & Royal Flushes
+				for (int f = 0; f < 7; f++) {
+					int flushCounter = 1;
+					int z = 1;
+					while (!(f+z==7) && sortedTable[f].getSuitID() == sortedTable[f + z].getSuitID()) {
+						flushCounter++;
+						z++;
+					}
+					if (flushCounter >= 5) {
+						flush = true;
+						if (highestCardInHand == sortedTable[x + 4].getValueInt()){
+							straightFlush=true;
+							if (highestCardInHand == 14) {
+								royal = true;
+							}
+						}
+					}
+				}
 			}
 		}
 
@@ -83,20 +101,22 @@ public class CalculateValue {
 		Card.compareBySuit(true);
 		Arrays.sort(sortedTable);
 		Card.compareBySuit(false);
-		//Checks for flushes
+		//Checks for flushes (unneccesary if a straight flush is found)
+		if (!straightFlush){
 		for (int x = 0; x < 7; x++) {
 			int flushCounter = 1;
 			int y = 1;
-			while (!(x+y==7) && sortedTable[x].getSuitID() == sortedTable[x + y].getSuitID()) {
-				flushCounter++;
-				y++;
-			}
-			if (flushCounter >= 5) {
-				flush = true;
-				highestCardInHand = sortedTable[x + 4].getValueInt();
+				while (!(x+y==7) && sortedTable[x].getSuitID() == sortedTable[x + y].getSuitID()) {
+					flushCounter++;
+					y++;
+				}
+				if (flushCounter >= 5) {
+					flush = true;
+					highestCardInHand = sortedTable[x + 4].getValueInt();
+				}
 			}
 		}
-		//TODO:Return a meaningful number
-		return 1;
+		//TODO:Return a meaningful number (hand value calculations)
+		return handval;
 	}
 }
