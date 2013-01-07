@@ -1,11 +1,10 @@
 import java.util.Arrays;
-
 public class CalculateValue {
 	public static int Calculate(Card[] sortedTable) {
 		int highestCardInHand;
 		int handval = 0;
+		//TODO: Clean up all of this, do hand calculations (for handval) in methods, display what hand the player got.
 		Boolean pair = false, twoPair = false, threeOfAKind = false, straight = false, flush = false, fullHouse = false, straightFlush = false, fourOfAKind = false, royal = false;
-
 		// Checks for pairs
 		// PairID is used to check for duplicates.
 		int PairID = 0;

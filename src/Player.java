@@ -48,5 +48,8 @@ public class Player {
 	public void giveCards(Card card1, Card card2){
 		hand[0] = card1;
 		hand[1] = card2;
-	}	
+	}
+	public void giveMoney (int winnings){
+		currentCash += winnings;
+	}
 }

@@ -46,20 +46,37 @@ public class holdem {
 				case 4:
 					// Win checks
 					int[] handValues = new int[numberOfPlayers];
-					int handToBeat;
+					int handToBeat = 0;
+					int f = 0;
 					for (Player player : players) {
-						int highestCardInHand;
-						Boolean pair = false, twoPair = false, threeOfAKind = false, straight = false, flush = false, straightFlush = false, fourOfAKind = false, royal = false;
-						Card[] sortedTable = new Card[7];
-						// Concatenates the player's hand and the table.
-						System.arraycopy(player.getHand(), 0, sortedTable, 0, 2);
-						System.arraycopy(table, 0, sortedTable, 2, 5);
-						Arrays.sort(sortedTable);
-						CalculateValue.Calculate(sortedTable);
-						// TODO:Some way of keeping track of who has the highest
-						// score, winning rewards etc.
-						break;
+						if (!player.hasFolded()) {
+							Card[] sortedTable = new Card[7];
+							// Concatenates the player's hand and the table.
+							// TODO: Saving everybody's hand value for the
+							// reveal, not calculating for folded hands
+							System.arraycopy(player.getHand(), 0, sortedTable,
+									0, 2);
+							System.arraycopy(table, 0, sortedTable, 2, 5);
+							Arrays.sort(sortedTable);
+							handValues[f] = CalculateValue
+									.Calculate(sortedTable);
+							//TODO: Ties
+							if (!(f == 0)
+									&& (handValues[f] > handValues[handToBeat])) {
+								handToBeat = f;
+							}
+						}
+						f++;
 					}
+					// TODO:Some way of keeping track of who has the highest
+					// score, winning rewards etc.
+					//TODO: Some form of leaderboard -something like
+					//1. Luke 2C 3C 4C 5C 6C 8D 5D
+					//2. Bob 2C 2S 4C 4S etc.
+					System.out.println(players[handToBeat].getPlayerName()+ "wins the hand!");
+					players[handToBeat].giveMoney(pot);
+					break;
+
 				}
 				String callOrCheck;
 
